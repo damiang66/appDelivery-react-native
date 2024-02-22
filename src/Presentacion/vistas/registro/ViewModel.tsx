@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ApiDelivery } from "../../../Data/source/remote/api/ApiDelivery";
+import axios from "axios";
 
 
  const RegistroVIewModel = () => {
@@ -20,8 +22,20 @@ import { useState } from "react";
         })
 
     }
-    const registro = ()=>{
-        console.log(valores);
+    const registro = async()=>{
+        try {
+          
+            console.log(ApiDelivery.toString);
+            
+            const response = await ApiDelivery.post('/usuario/crear',valores)
+            console.log(response);
+            
+        } catch (error) {
+            console.log('Error: ' + error);
+            
+            
+        }
+     
         
     }
     

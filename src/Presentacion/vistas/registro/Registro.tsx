@@ -4,8 +4,10 @@ import { RounderButton } from '../../componentes/RounderButton';
 import useViewModel from './ViewModel';
 import { PersonalizadoTextImput } from '../../componentes/PersonalizadoTextImput';
 import styles from './Styles'
+import { ApiDelivery } from '../../../Data/source/remote/api/ApiDelivery';
 export const Registro = () => {
    const {nombre,apellido,email,telefono,password,confirmarPassword,onChange,registro}=useViewModel();
+   
     return (
         <View style={styles.container}>
             <Image style={styles.imageBackground}
