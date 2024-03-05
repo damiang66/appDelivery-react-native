@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { LoginAuthCase } from '../../../Dominio/useCase/auth/loginAuth';
-import { SaveUsuarioUseCase } from '../../../Dominio/useCase/usuarioLocal/SaveUsuario';
-import { GetUsuarioUseCase } from '../../../Dominio/useCase/usuarioLocal/GetUsuario';
+import { SaveUsuarioLocalUseCase } from '../../../Dominio/useCase/usuarioLocal/SaveUsuarioLocal';
+import { GetUsuarioLocalUseCase } from '../../../Dominio/useCase/usuarioLocal/GetUsuarioLocal';
+import { useUsuarioLocal } from '../../hook/useUsuarioLocal';
  const HomeVIewModel = () => {
-    useEffect(() => {
-    getUsuarioSession();
-    }, [])
-    const  getUsuarioSession = async()=>{
-        const usuario =  await GetUsuarioUseCase();
-        console.log('USUARIO SESSION: ' + JSON.stringify(usuario));
-        
-    }
+   const {user,getUsuarioSession}=useUsuarioLocal();
+   console.log('USUARIO DE SESSION: ' + JSON.stringify(user));
+   
     
     const [valores, setValores] = useState({
         email:'',
@@ -34,7 +30,9 @@ import { GetUsuarioUseCase } from '../../../Dominio/useCase/usuarioLocal/GetUsua
                 
                 setErrorMensaje(respuesta.message);
             }else{
-              await SaveUsuarioUseCase(respuesta.data); 
+              await SaveUsuarioLocalUseCase(respuesta.data); 
+              getUsuarioSession();
+
             }
         }
       
@@ -52,7 +50,7 @@ import { GetUsuarioUseCase } from '../../../Dominio/useCase/usuarioLocal/GetUsua
         return true;
     }
     
-  return { ...valores,onChange,errorMensaje,isValidForm,login}
+  return { ...valores,onChange,errorMensaje,isValidForm,login,user}
   
   
 }
